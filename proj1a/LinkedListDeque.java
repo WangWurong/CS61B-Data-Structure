@@ -1,6 +1,6 @@
 public class LinkedListDeque<T> {
-	private Node head;
-	private int size;
+	public Node head;
+	public int size;
 
 	public class Node {
 		public T item;
@@ -19,14 +19,16 @@ public class LinkedListDeque<T> {
 	}
 
 	public LinkedListDeque(LinkedListDeque other) {
-        Node newHead = new Node(null);
+		head = new Node(null);
+		head.prev = head;
+		head.next = head;
+		size = 0;
         Node pointer = other.head.next;
-        newHead.next = pointer;
-        while (pointer != null && pointer.item != null) {
+        while (pointer != other.head) {
             addLast(pointer.item);
             pointer = pointer.next;
+            size += 1;
         }
-
     }
 
 	public void addFirst(T item) {
@@ -57,12 +59,14 @@ public class LinkedListDeque<T> {
 
 	public void printDeque() {
 	    Node pointer = head.next;
-	    while(pointer != null) {
-	        System.out.print(String.valueOf(pointer.item));
+	    while(pointer != head) {
+	        System.out.println(String.valueOf(pointer.item));
+	        pointer = pointer.next;
         }
     }
 
 	public T removeFirst() {
+		if (isEmpty()) return null;
 	    T item = head.next.item;
 	    Node newFirst = head.next.next;
 	    if (newFirst != null) {
@@ -74,11 +78,12 @@ public class LinkedListDeque<T> {
     }
 
 	public T removeLast() {
-	    T item = tail.prev.item;
-	    Node newLast = tail.prev.prev;
+		if (isEmpty()) return null;
+	    T item = head.prev.item;
+	    Node newLast = head.prev.prev;
 	    if (newLast != null) {
-	        tail.prev.prev.next = newLast;
-	        newLast.next = tail;
+	        head.prev.prev.next = newLast;
+	        newLast.next = head;
 	        size--;
         }
         return item;
