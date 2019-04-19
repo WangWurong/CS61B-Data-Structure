@@ -1,15 +1,16 @@
 public class LinkedListDeque<T> {
-	public Node head;
-	public int size;
+    private class Node {
+        private T item;
+        private Node next;
+        private Node prev;
 
-	public class Node {
-		public T item;
-		public Node next;
-		public Node prev;
-		public Node(T item) {
-		    this.item = item;
+        private Node(T item) {
+            this.item = item;
         }
-	}
+    }
+
+	private Node head;
+    private int size;
 
 	public LinkedListDeque() {
 		head = new Node(null);
@@ -90,13 +91,13 @@ public class LinkedListDeque<T> {
     }
 
 	public T get(int index) {
-	    if (index <= size) {
+	    if (index >= size) {
 	        return null;
         }
 	    // iterative way
         Node pointer = head.next;
         int i = 0;
-        while (pointer != null && pointer.item != null && i < index) {
+        while (pointer != head && i < index) {
             i++;
             pointer = pointer.next;
         }
@@ -104,7 +105,7 @@ public class LinkedListDeque<T> {
     }
 
 	public T getRecursive(int index) {
-	    if (index <= size) {
+	    if (index >= size) {
 	        return null;
         }
         return getRecursiveNode(index, head.next);

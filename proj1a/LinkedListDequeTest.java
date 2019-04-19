@@ -77,13 +77,36 @@ public class LinkedListDequeTest {
 		lld1.removeFirst();
 		// should be empty 
 		passed = checkEmpty(true, lld1.isEmpty()) && passed;
+		printTestStatus(passed);
+
+		lld1.addLast(9);
+		int last = lld1.removeLast();
+		passed = last == 9;
 
 		printTestStatus(passed);
+	}
+
+	private static void testGet() {
+		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+
+		lld1.addLast(1);
+		lld1.addLast(2);
+		lld1.addLast(3);
+		lld1.addLast(4);
+		lld1.addLast(5);
+		System.out.println("Test normal get.\n");
+		boolean passed = lld1.get(2) == 3;
+		printTestStatus(passed);
+
+		System.out.println("Test recursive get.\n");
+		boolean passed2 = lld1.getRecursive(2) == 3;
+		printTestStatus(passed2);
 	}
 
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
+		testGet();
 	}
 } 
